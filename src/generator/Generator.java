@@ -1,4 +1,4 @@
-package genetator;
+package generator;
 
 import java.io.IOException;
 import java.nio.file.Files;

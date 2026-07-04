@@ -64,4 +64,22 @@ public class PatientService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public boolean isTimeSlotBusy(LocalDate date, LocalTime time) {
+        for (Patient p : patients) {
+            if (p.getDate().equals(date) && p.getTime().equals(time)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isTimeSlotBusy(LocalDate date, LocalTime time, String excludeId) {
+        for (Patient p : patients) {
+            if (p.getDate().equals(date) && p.getTime().equals(time) && !p.getId().equals(excludeId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

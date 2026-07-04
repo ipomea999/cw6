@@ -35,7 +35,7 @@ public class Server {
     private void initFreemarker() {
         freemarkerConfig = new Configuration();
         try {
-            freemarkerConfig.setDirectoryForTemplateLoading(new File("templates"));
+            freemarkerConfig.setDirectoryForTemplateLoading(new File("data"));
             freemarkerConfig.setDefaultEncoding("UTF-8");
             freemarkerConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         } catch (IOException e) {
@@ -259,6 +259,10 @@ public class Server {
                 errors.add("Неверный формат времени.");
             }
 
+            if (date != null && time != null && patientService.isTimeSlotBusy(date, time)) {
+                errors.add("Выбранное время на этот день уже занято другим пациентом.");
+            }
+
             if (!errors.isEmpty()) {
                 sendErrorPage(exchange, errors);
                 return;
@@ -348,6 +352,10 @@ public class Server {
                 time = LocalTime.parse(timeStr);
             } catch (Exception e) {
                 errors.add("Неверный формат времени.");
+            }
+
+            if (date != null && time != null && patientService.isTimeSlotBusy(date, time, id)) {
+                errors.add("Выбранное время на этот день уже занято другим пациентом.");
             }
 
             if (!errors.isEmpty()) {

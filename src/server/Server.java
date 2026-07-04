@@ -248,6 +248,9 @@ public class Server {
             LocalDate dob = null;
             try {
                 dob = LocalDate.parse(dobStr);
+                if (dob.isAfter(LocalDate.now())) {
+                    errors.add("Дата рождения не может быть в будущем.");
+                }
             } catch (Exception e) {
                 errors.add("Неверный формат даты рождения.");
             }
@@ -343,6 +346,9 @@ public class Server {
             LocalDate dob = null;
             try {
                 dob = LocalDate.parse(dobStr);
+                if (dob.isAfter(LocalDate.now())) {
+                    errors.add("Дата рождения не может быть в будущем.");
+                }
             } catch (Exception e) {
                 errors.add("Неверный формат даты рождения.");
             }
